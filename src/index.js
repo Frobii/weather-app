@@ -7,7 +7,7 @@ async function fetchThreeDayForecast(location) {
   return fetchedData;
 }
 
-async function processLocationData(fetchedData) {
+async function processCurrentData(fetchedData) {
   const currentWeather = fetchedData.current;
   const forecastArray = await fetchedData.forecast.forecastday;
   const todaysForecast = await forecastArray[0].day;
@@ -53,7 +53,7 @@ async function processLocationData(fetchedData) {
 }
 
 const fetchedData = await fetchThreeDayForecast('Adelaide');
-const processedData = await processLocationData(fetchedData);
+const processedData = await processCurrentData(fetchedData);
 
 // console.log(fetchedData);
 console.log('processed current weather', processedData);
