@@ -11,10 +11,12 @@ async function processCurrentData(fetchedData) {
   const currentWeather = fetchedData.current;
   const forecastArray = await fetchedData.forecast.forecastday;
   const todaysForecast = await forecastArray[0].day;
+  const astroData = await forecastArray[0].astro;
 
   console.log('current weather', currentWeather);
   console.log('forecast data', forecastArray);
   console.log('todays forecast', todaysForecast);
+  console.log('astro data', astroData);
 
   const currentCondition = currentWeather.condition.text;
   const currentConditionIcon = currentWeather.condition.icon;
@@ -24,6 +26,9 @@ async function processCurrentData(fetchedData) {
   const dateTime = currentWeather.last_updated.split(' ');
   const date = dateTime[0];
   const time = dateTime[1];
+  const { sunrise } = astroData;
+  const { sunset } = astroData;
+  const moonPhase = astroData.moon_phase;
   const currentTempC = currentWeather.temp_c;
   const currentTempF = currentWeather.temp_f;
   const { humidity } = currentWeather;
@@ -41,6 +46,9 @@ async function processCurrentData(fetchedData) {
     locationName,
     date,
     time,
+    sunrise,
+    sunset,
+    moonPhase,
     currentTempC,
     currentTempF,
     humidity,
@@ -52,8 +60,16 @@ async function processCurrentData(fetchedData) {
   };
 }
 
-const fetchedData = await fetchThreeDayForecast('Adelaide');
-const processedData = await processCurrentData(fetchedData);
+async function processThreeDayForecast(fetchedData) {
+  const forecastArray = await fetchedData.forecast.forecastday;
+  // console.log('forecast data', forecastArray);
+}
 
-// console.log(fetchedData);
-console.log('processed current weather', processedData);
+const fetchedData = await fetchThreeDayForecast('Adelaide');
+const currentWeather = await processCurrentData(fetchedData);
+
+console.log('processed current weather', currentWeather);
+
+const threeDayForecast = processThreeDayForecast(fetchedData);
+
+// console.log(threeDayForecast);
