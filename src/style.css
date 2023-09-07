@@ -1,3 +1,38 @@
-div {
-    color: blue;
+body {
+    display: flex;
+    background-color: rgba(128, 128, 128, 0.589);
+}
+
+#searchForm {
+    display: flex;
+}
+
+fieldset {
+    border: none;
+    padding: 0px;
+    margin: 0px;
+}
+
+.searchLocation {
+    color: white;
+    border-radius: 1.625rem;
+    background-color:rgba(2, 25, 54, 0.842);
+    border: 2px solid rgba(2, 25, 54, 0.842);
+    height: 35px;
+    width: 240px;
+    padding-left: 20px;    
+    font-weight: 800;
+    font-size: 1rem;
+    outline: none;
+}
+
+.searchLocation:focus {
+    border:2px solid white;
+    color: white;
+}
+
+.searchLocation::placeholder {
+    color: rgba(173, 173, 173, 0.89);
+    font-weight: 600;
+    font-size: 1rem;
 }

@@ -1,4 +1,5 @@
 import './style.css';
+import './template.html';
 
 function getDayName(dateStr, locale) {
   const date = new Date(dateStr);
