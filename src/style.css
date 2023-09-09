@@ -1,7 +1,16 @@
 body {
     display: flex;
-    background-color: rgba(128, 128, 128, 0.589);
+    background-color: rgb(0, 112, 146);
     margin: 0px;
+}
+
+.header {
+    width: 100vw;
+    display: flex;
+    height: 100px;
+    /* background-color: white; */
+    align-items: center;
+    justify-content: center;
 }
 
 .search-form {
@@ -13,7 +22,7 @@ body {
     background-color:rgba(2, 25, 54, 0.842);
     border: 2px solid rgba(2, 25, 54, 0);
     height: 35px;
-    width: 240px;
+    width: 280px;
 }
 .search-form:focus {
     border:2px solid white;
@@ -51,4 +60,7 @@ body {
     height: 20px;
     width: 20px;
     padding-right: 15px;
+}
+.search-icon:hover {
+    cursor: pointer;
 }
