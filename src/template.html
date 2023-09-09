@@ -6,9 +6,36 @@
     <title>How's the Weather?</title>
 </head>
 <body>
-    <form class="search-form" novalidate>
-        <input type="text" class="search-location" name="searchLocaiton" placeholder="Search location">
-        <div class="search-icon"></div>
-    </form>
+    <div class="header">
+        <form class="search-form" novalidate>
+            <input type="text" class="search-location" name="searchLocaiton" placeholder="Search location">
+            <div class="search-icon"></div>
+        </form>
+    </div>
+    <div class="main">
+        <div class="location-info">
+            <div class="location-name"></div>
+            <div class="date-time"></div>
+        </div>
+        <div class="weather-info">
+            <div class="basic-weather">
+                <div class="weather-icon"></div>
+                <div class="temperature"></div>
+                <div class="weather-description"></div>
+                <div class="weather-feels-like"></div>
+            </div>
+            <div class="detailed-weather">
+                <div class="wind-speed"></div>
+                <div class="humidity"></div>
+                <div class="uv-index"></div>
+                <div class="visibility"></div>
+                <div class="humidity"></div>
+                <div class="precipation"></div>
+                <div class="sunrise"></div>
+                <div class="sunset"></div>
+                <div class="moon-phase"></div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
