@@ -1,5 +1,5 @@
 import '../style.css';
 import '../template.html';
-import test from './dom';
+import setSearchEvents from './dom';
 
-test();
+setSearchEvents();
