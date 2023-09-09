@@ -38,6 +38,7 @@ const api = (() => {
     const feelsLikeF = currentWeather.feelslike_f;
     const precipation = currentWeather.precip_in;
     const windSpeed = currentWeather.wind_kph;
+    const visibility = currentWeather.vis_km;
     const uvIndex = currentWeather.uv;
 
     return {
@@ -58,6 +59,7 @@ const api = (() => {
       feelsLikeF,
       precipation,
       windSpeed,
+      visibility,
       uvIndex,
     };
   }
