@@ -14,18 +14,22 @@ const api = (() => {
 
   async function getCurrentWeather(location) {
     const fetchedData = await fetchThreeDayForecast(location);
+    // console.log('fetched', fetchedData);
 
     const currentWeather = fetchedData.current;
     const forecastArray = await fetchedData.forecast.forecastday;
     const todaysForecast = await forecastArray[0].day;
     const astroData = await forecastArray[0].astro;
-    console.log('today', todaysForecast);
+
+    // console.log('current', currentWeather);
+    // console.log('forecast', todaysForecast);
+    // console.log('astro', astroData);
 
     const currentCondition = currentWeather.condition.text;
     const currentConditionIcon = currentWeather.condition.icon;
     const forecastCondition = todaysForecast.condition.text;
     const forecastConditionIcon = todaysForecast.condition.icon;
-    const locationName = fetchedData.location.name;
+    const locationName = `${fetchedData.location.name}, ${fetchedData.location.country}`;
     const dateTime = currentWeather.last_updated.split(' ');
     const date = dateTime[0];
     const time = dateTime[1];

@@ -52,6 +52,9 @@ const apiToDom = () => {
     const { currentWeather } = processedData;
     const { forecastWeather } = processedData;
 
+    console.log('current', currentWeather);
+    console.log('forecast', forecastWeather);
+
     populateBasicWeather(currentWeather);
     populateDetailedWeather(currentWeather);
   }
