@@ -81,6 +81,28 @@ const api = (() => {
     };
   }
 
+  async function getHourlyForecast(location) {
+    const fetchedData = await fetchThreeDayForecast(location);
+    const forecastArray = await fetchedData.forecast.forecastday;
+    const hourlyData = await forecastArray[0].hour;
+    // console.log(hourlyData);
+
+    const processedHours = [];
+
+    hourlyData.forEach((hour) => {
+      const hourObject = {};
+
+      hourObject.temp_c = hour.temp_c;
+      const dateTime = hour.time.split(' ');
+      hourObject.time = dateTime[1];
+      hourObject.icon = hour.condition.icon;
+
+      processedHours.push(hourObject);
+    });
+
+    return processedHours;
+  }
+
   async function getThreeDayForecast(location) {
     const fetchedData = await fetchThreeDayForecast(location);
     const forecastArray = await fetchedData.forecast.forecastday;
@@ -109,6 +131,7 @@ const api = (() => {
   return {
     getLocationDetails,
     getCurrentWeather,
+    getHourlyForecast,
     getThreeDayForecast,
   };
 })();

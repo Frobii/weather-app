@@ -6,12 +6,23 @@ const apiToDom = () => {
     const searchData = searchBar.value;
     const locationDetails = await api.getLocationDetails(searchData);
     const currentWeather = await api.getCurrentWeather(searchData);
+    const hourlyWeather = await api.getHourlyForecast(searchData);
     const forecastWeather = await api.getThreeDayForecast(searchData);
+
     return {
       locationDetails,
       currentWeather,
+      hourlyWeather,
       forecastWeather,
     };
+  }
+
+  function populateLocationDetails(locationDetails) {
+    const locationName = document.querySelector('.location-name');
+    const dateTime = document.querySelector('.date-time');
+
+    locationName.textContent = locationDetails.locationName;
+    dateTime.textContent = locationDetails.displayDate;
   }
 
   function populateBasicWeather(currentWeather) {
@@ -52,12 +63,15 @@ const apiToDom = () => {
     const processedData = await callApi();
     const { locationDetails } = processedData;
     const { currentWeather } = processedData;
+    const { hourlyWeather } = processedData;
     const { forecastWeather } = processedData;
 
-    console.log('details', locationDetails);
-    console.log('current', currentWeather);
-    console.log('forecast', forecastWeather);
+    // console.log('details', locationDetails);
+    // console.log('current', currentWeather);
+    console.log(hourlyWeather);
+    // console.log('forecast', forecastWeather);
 
+    populateLocationDetails(locationDetails);
     populateBasicWeather(currentWeather);
     populateDetailedWeather(currentWeather);
   }
