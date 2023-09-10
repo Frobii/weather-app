@@ -12,6 +12,23 @@ const api = (() => {
     return fetchedData;
   }
 
+  async function getLocationDetails(location) {
+    const fetchedData = await fetchThreeDayForecast(location);
+    const currentWeather = fetchedData.current;
+
+    const locationName = `${fetchedData.location.name}, ${fetchedData.location.country}`;
+    const dateTime = currentWeather.last_updated.split(' ');
+    const date = dateTime[0];
+    const time = dateTime[1];
+    const dayName = getDayName(date, 'en-US');
+    const displayDate = `${dayName} ${date} | ${time}`;
+
+    return {
+      locationName,
+      displayDate,
+    };
+  }
+
   async function getCurrentWeather(location) {
     const fetchedData = await fetchThreeDayForecast(location);
     // console.log('fetched', fetchedData);
@@ -29,10 +46,6 @@ const api = (() => {
     const currentConditionIcon = currentWeather.condition.icon;
     const forecastCondition = todaysForecast.condition.text;
     const forecastConditionIcon = todaysForecast.condition.icon;
-    const locationName = `${fetchedData.location.name}, ${fetchedData.location.country}`;
-    const dateTime = currentWeather.last_updated.split(' ');
-    const date = dateTime[0];
-    const time = dateTime[1];
     const { sunrise } = astroData;
     const { sunset } = astroData;
     const moonPhase = astroData.moon_phase;
@@ -52,9 +65,6 @@ const api = (() => {
       currentConditionIcon,
       forecastCondition,
       forecastConditionIcon,
-      locationName,
-      date,
-      time,
       sunrise,
       sunset,
       moonPhase,
@@ -97,6 +107,7 @@ const api = (() => {
   }
 
   return {
+    getLocationDetails,
     getCurrentWeather,
     getThreeDayForecast,
   };

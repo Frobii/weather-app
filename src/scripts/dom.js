@@ -4,10 +4,11 @@ const apiToDom = () => {
   async function callApi() {
     const searchBar = document.querySelector('.search-location');
     const searchData = searchBar.value;
+    const locationDetails = await api.getLocationDetails(searchData);
     const currentWeather = await api.getCurrentWeather(searchData);
     const forecastWeather = await api.getThreeDayForecast(searchData);
-
     return {
+      locationDetails,
       currentWeather,
       forecastWeather,
     };
@@ -49,9 +50,11 @@ const apiToDom = () => {
 
   async function populateDom() {
     const processedData = await callApi();
+    const { locationDetails } = processedData;
     const { currentWeather } = processedData;
     const { forecastWeather } = processedData;
 
+    console.log('details', locationDetails);
     console.log('current', currentWeather);
     console.log('forecast', forecastWeather);
 
