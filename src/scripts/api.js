@@ -19,6 +19,7 @@ const api = (() => {
     const forecastArray = await fetchedData.forecast.forecastday;
     const todaysForecast = await forecastArray[0].day;
     const astroData = await forecastArray[0].astro;
+    console.log('today', todaysForecast);
 
     const currentCondition = currentWeather.condition.text;
     const currentConditionIcon = currentWeather.condition.icon;
@@ -36,7 +37,8 @@ const api = (() => {
     const { humidity } = currentWeather;
     const feelsLikeC = currentWeather.feelslike_c;
     const feelsLikeF = currentWeather.feelslike_f;
-    const precipation = currentWeather.precip_in;
+    const rainfallMillimeters = todaysForecast.totalprecip_mm;
+    const chanceOfRain = todaysForecast.daily_chance_of_rain;
     const windSpeed = currentWeather.wind_kph;
     const visibility = currentWeather.vis_km;
     const uvIndex = currentWeather.uv;
@@ -57,7 +59,8 @@ const api = (() => {
       humidity,
       feelsLikeC,
       feelsLikeF,
-      precipation,
+      rainfallMillimeters,
+      chanceOfRain,
       windSpeed,
       visibility,
       uvIndex,

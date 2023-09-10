@@ -25,11 +25,35 @@ const apiToDom = () => {
     feelsLike.textContent = currentWeather.feelsLikeC;
   }
 
+  function populateDetailedWeather(currentWeather) {
+    const windSpeed = document.querySelector('.wind-speed');
+    const humidity = document.querySelector('.humidity');
+    const uvIndex = document.querySelector('.uv-index');
+    const visibility = document.querySelector('.visibility');
+    const rainfall = document.querySelector('.rainfall');
+    const chanceOfRain = document.querySelector('.chance-of-rain');
+    const sunrise = document.querySelector('.sunrise');
+    const sunset = document.querySelector('.sunset');
+    const moonPhase = document.querySelector('.moon-phase');
+
+    windSpeed.textContent = currentWeather.windSpeed;
+    humidity.textContent = currentWeather.humidity;
+    uvIndex.textContent = currentWeather.uvIndex;
+    visibility.textContent = currentWeather.visibility;
+    rainfall.textContent = currentWeather.rainfallMillimeters;
+    chanceOfRain.textContent = currentWeather.chanceOfRain;
+    sunrise.textContent = currentWeather.sunrise;
+    sunset.textContent = currentWeather.sunset;
+    moonPhase.textContent = currentWeather.moonPhase;
+  }
+
   async function populateDom() {
     const processedData = await callApi();
     const { currentWeather } = processedData;
+    const { forecastWeather } = processedData;
 
     populateBasicWeather(currentWeather);
+    populateDetailedWeather(currentWeather);
   }
 
   return { populateDom };
