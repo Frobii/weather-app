@@ -4,6 +4,13 @@ const api = (() => {
     return date.toLocaleDateString(locale, { weekday: 'long' });
   }
 
+  function getMonthName(dateStr) {
+    const date = new Date(dateStr);
+    const month = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
+    return month[date.getMonth()];
+  }
+
   async function fetchThreeDayForecast(location) {
     const apiKey = '595f8949c2a74450b66224031231408';
     const response = await fetch(`https://api.weatherapi.com/v1/forecast.json?key=${apiKey}&q=${location}&days=5`);
@@ -21,7 +28,11 @@ const api = (() => {
     const date = dateTime[0];
     const time = dateTime[1];
     const dayName = getDayName(date, 'en-US');
-    const displayDate = `${dayName} ${date} | ${time}`;
+    const monthName = getMonthName(date);
+    const year = date.substring(0, 4);
+    const day = date.substring(8, 10);
+
+    const displayDate = `${dayName} ${day} ${monthName} ${year} | ${time}`;
 
     return {
       locationName,

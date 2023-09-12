@@ -1,3 +1,13 @@
+@font-face {
+    font-family: quicksand;
+    src: url(./assets/fonts/Quicksand-VariableFont_wght.ttf)
+}
+
+html {
+    font-family: quicksand;
+    font-weight: 700;
+}
+
 body {
     margin: 0px;
     height: 100vh;
@@ -15,6 +25,10 @@ body {
     justify-content: center;
 }
 
+.main {
+    height: calc(100vh - 150px)
+}
+
 .footer {
     height: 50px;
     width: 100vw;
@@ -25,7 +39,6 @@ body {
 
 a {
     color: white;
-    font-weight: 700;
     text-decoration: none;
 }
 a:hover{
@@ -73,7 +86,7 @@ a:hover{
 }
 
 .search-icon {
-    background-image: url(./assets/search-icon-white.svg);
+    background-image: url(./assets/icons/search-icon-white.svg);
     background-size: contain;
     background-repeat: no-repeat;
     height: 20px;
@@ -83,3 +96,102 @@ a:hover{
 .search-icon:hover {
     cursor: pointer;
 }
+
+.main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.current-weather {
+    width: 40rem;
+    height: 400px;
+    color: white;
+}
+
+.location-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100px;
+}
+.location-name {
+    font-size: 2rem;
+}
+.date-time {
+    font-size: 1.25rem;
+    color: rgba(255, 255, 255, 0.507);
+}
+
+.weather-info {
+    display: flex;
+    height: 300px;
+    margin-top: 20px;
+}
+
+.basic-weather {
+    width: 35%;
+}
+.basic-icon-temp {
+    display: flex;
+    align-items: center;
+}
+.basic-weather-icon {
+    display: none;
+    background-size: contain;
+    background-repeat: no-repeat;
+    color: white;
+    width: 4rem;
+    height: 4rem;
+}
+.basic-temperature {
+    font-size: 3rem;
+    text-align: right;
+}
+.weather-description, .weather-feels-like {
+    margin-left: 20px;
+    margin-top: 5px;
+    font-size: 1.3rem;
+}
+.weather-feels-like {
+    color: rgba(255, 255, 255, 0.507);
+}
+
+.data-item {
+    display: none;
+}
+.data-label {
+    color:rgba(255, 255, 255, 0.507);
+}
+.detailed-weather {
+    display: grid;
+    grid-template-columns: 33fr 33fr 33fr;
+    grid-template-rows: 33fr 33fr 33fr;
+    width: 65%;
+}
+.data-item > :nth-child(2) {
+    margin-top: 5px;
+    font-size: 1.2rem;
+}
+
+.forecast-weather {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.hourly-forecast {
+    background-color: white;
+    width: 90vw;
+    height: 200px;
+    margin-top: 50px;
+}
+
+.daily-forecast {
+    background-color: white;
+    width: 50vw;
+    height: 400px;
+    margin-top: 50px;
+}
+

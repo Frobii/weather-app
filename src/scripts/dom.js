@@ -26,18 +26,22 @@ const apiToDom = () => {
   }
 
   function populateBasicWeather(currentWeather) {
-    const icon = document.querySelector('.weather-icon');
-    const temperature = document.querySelector('.temperature');
+    const icon = document.querySelector('.basic-weather-icon');
+    const temperature = document.querySelector('.basic-temperature');
     const description = document.querySelector('.weather-description');
     const feelsLike = document.querySelector('.weather-feels-like');
 
-    icon.style.backgroundImage = currentWeather.currentConditionIcon;
-    temperature.textContent = currentWeather.currentTempC;
+    console.log(currentWeather.currentConditionIcon);
+    icon.src = currentWeather.currentConditionIcon;
+    icon.style.display = 'flex';
+    // icon.style.backgroundImage = currentWeather.currentConditionIcon;
+    temperature.textContent = `${currentWeather.currentTempC}°C`;
     description.textContent = currentWeather.currentCondition;
-    feelsLike.textContent = currentWeather.feelsLikeC;
+    feelsLike.textContent = `Feels Like ${currentWeather.feelsLikeC}°C`;
   }
 
   function populateDetailedWeather(currentWeather) {
+    const dataItems = document.querySelectorAll('.data-item');
     const windSpeed = document.querySelector('.wind-speed');
     const humidity = document.querySelector('.humidity');
     const uvIndex = document.querySelector('.uv-index');
@@ -48,12 +52,17 @@ const apiToDom = () => {
     const sunset = document.querySelector('.sunset');
     const moonPhase = document.querySelector('.moon-phase');
 
-    windSpeed.textContent = currentWeather.windSpeed;
-    humidity.textContent = currentWeather.humidity;
+    dataItems.forEach((item) => {
+      item.style.display = 'flex';
+      item.style.flexDirection = 'column';
+    });
+
+    windSpeed.textContent = `${currentWeather.windSpeed}m/s`;
+    humidity.textContent = `${currentWeather.humidity}%`;
     uvIndex.textContent = currentWeather.uvIndex;
-    visibility.textContent = currentWeather.visibility;
-    rainfall.textContent = currentWeather.rainfallMillimeters;
-    chanceOfRain.textContent = currentWeather.chanceOfRain;
+    visibility.textContent = `${currentWeather.visibility}km`;
+    rainfall.textContent = `${currentWeather.rainfallMillimeters}%`;
+    chanceOfRain.textContent = `${currentWeather.chanceOfRain}%`;
     sunrise.textContent = currentWeather.sunrise;
     sunset.textContent = currentWeather.sunset;
     moonPhase.textContent = currentWeather.moonPhase;
@@ -68,7 +77,7 @@ const apiToDom = () => {
 
     // console.log('details', locationDetails);
     // console.log('current', currentWeather);
-    console.log(hourlyWeather);
+    // console.log(hourlyWeather);
     // console.log('forecast', forecastWeather);
 
     populateLocationDetails(locationDetails);
