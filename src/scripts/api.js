@@ -92,15 +92,26 @@ const api = (() => {
     };
   }
 
+  function getCurrentTime(fetchedData) {
+    const currentWeather = fetchedData.current;
+
+    const dateTime = currentWeather.last_updated.split(' ');
+    const currentTime = dateTime[1];
+
+    return currentTime;
+  }
+
   async function getHourlyForecast(location) {
     const fetchedData = await fetchThreeDayForecast(location);
     const forecastArray = await fetchedData.forecast.forecastday;
-    const hourlyData = await forecastArray[0].hour;
-    // console.log(hourlyData);
+    const hourlyDataToday = await forecastArray[0].hour;
+    const hourlyDataTomorrow = await forecastArray[1].hour;
+    const currentTime = getCurrentTime(fetchedData);
+    const currentTimeRoundDown = `${currentTime.substring(0, 3)}00`;
+    const processed48Hours = [];
+    const next24Hours = [];
 
-    const processedHours = [];
-
-    hourlyData.forEach((hour) => {
+    hourlyDataToday.forEach((hour) => {
       const hourObject = {};
 
       hourObject.temp_c = hour.temp_c;
@@ -108,10 +119,30 @@ const api = (() => {
       hourObject.time = dateTime[1];
       hourObject.icon = hour.condition.icon;
 
-      processedHours.push(hourObject);
+      processed48Hours.push(hourObject);
     });
 
-    return processedHours;
+    hourlyDataTomorrow.forEach((hour) => {
+      const hourObject = {};
+
+      hourObject.temp_c = hour.temp_c;
+      const dateTime = hour.time.split(' ');
+      hourObject.time = dateTime[1];
+      hourObject.icon = hour.condition.icon;
+
+      processed48Hours.push(hourObject);
+    });
+
+    for (let i = 0; i < 24; i += 1) {
+      if (processed48Hours[i].time === currentTimeRoundDown) {
+        for (let j = i; j < (i + 24); j += 1) {
+          next24Hours.push(processed48Hours[j]);
+        }
+        break;
+      }
+    }
+
+    return next24Hours;
   }
 
   async function getThreeDayForecast(location) {
