@@ -179,13 +179,79 @@ a:hover{
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-top: 40px;
 }
 
+.navigation-controls {
+    height: 40px;
+    display: flex;
+    align-items: center;
+}
+.arrow-left {
+    display: none;
+    background-image: url(./assets/icons/left-arrow.svg);
+    background-size: contain;
+    background-repeat: no-repeat;
+    height: 40px;
+    width: 40px;
+}
+.arrow-left:hover {
+    cursor: pointer;
+}
+.dot {
+    display: none;
+    background-image: url(./assets/icons/dot-small-svgrepo-com.svg);
+    background-size: contain;
+    background-repeat: no-repeat;
+    height: 30px;
+    width: 30px;
+    /* filter: brightness(0%); */
+}
+.arrow-right {
+    display: none;
+    background-image: url(./assets/icons/right-arrow.svg);
+    background-size: contain;
+    background-repeat: no-repeat;
+    height: 40px;
+    width: 40px;
+}
+.arrow-right:hover {
+    cursor: pointer;
+}
 .hourly-forecast {
-    background-color: white;
-    width: 90vw;
+    /* border: 1px solid black; */
+    width: 60rem;
     height: 200px;
-    margin-top: 50px;
+}
+.six-hour-block {
+    width: 60rem;
+    height: 200px;
+    /* border: black solid 1px; */
+    position: absolute;
+    display: none;
+    color: white;
+}
+.hour {
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly
+}
+.hourly-time {
+    font-size: 1.25rem;
+}
+.hourly-temp {
+    font-size: 2rem;
+}
+
+.block-two, .block-three, .block-four {
+    display: none;
+}
+.hour {
+    height: 100%;
+    width: 100%;
+    /* border: solid 1px black; */
 }
 
 .daily-forecast {
@@ -194,4 +260,3 @@ a:hover{
     height: 400px;
     margin-top: 50px;
 }
-

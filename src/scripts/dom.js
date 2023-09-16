@@ -31,10 +31,8 @@ const apiToDom = () => {
     const description = document.querySelector('.weather-description');
     const feelsLike = document.querySelector('.weather-feels-like');
 
-    console.log(currentWeather.currentConditionIcon);
     icon.src = currentWeather.currentConditionIcon;
     icon.style.display = 'flex';
-    // icon.style.backgroundImage = currentWeather.currentConditionIcon;
     temperature.textContent = `${currentWeather.currentTempC}°C`;
     description.textContent = currentWeather.currentCondition;
     feelsLike.textContent = `Feels Like ${currentWeather.feelsLikeC}°C`;
@@ -68,6 +66,110 @@ const apiToDom = () => {
     moonPhase.textContent = currentWeather.moonPhase;
   }
 
+  function initializeNavigationControls() {
+    const arrowLeft = document.querySelector('.arrow-left');
+    const arrowRight = document.querySelector('.arrow-right');
+    const arrows = [arrowLeft, arrowRight];
+
+    arrows.forEach((control) => {
+      control.style.display = 'flex';
+    });
+
+    const dots = document.querySelectorAll('.dot');
+    const dotOne = dots[0];
+    const dotTwo = dots[1];
+    const dotThree = dots[2];
+    const dotFour = dots[3];
+
+    dots.forEach((control) => {
+      control.style.display = 'flex';
+    });
+
+    dotOne.style.filter = 'brightness(30%)';
+
+    const blockOne = document.querySelector('.block-one');
+    const blockTwo = document.querySelector('.block-two');
+    const blockThree = document.querySelector('.block-three');
+    const blockFour = document.querySelector('.block-four');
+
+    blockOne.style.display = 'flex';
+
+    arrowRight.addEventListener('click', () => {
+      if (blockOne.style.display === 'flex') {
+        blockOne.style.display = 'none';
+        blockTwo.style.display = 'flex';
+        dotOne.style.filter = 'brightness(100%)';
+        dotTwo.style.filter = 'brightness(30%)';
+      } else if (blockTwo.style.display === 'flex') {
+        blockTwo.style.display = 'none';
+        blockThree.style.display = 'flex';
+        dotTwo.style.filter = 'brightness(100%)';
+        dotThree.style.filter = 'brightness(30%)';
+      } else if (blockThree.style.display === 'flex') {
+        blockThree.style.display = 'none';
+        blockFour.style.display = 'flex';
+        dotThree.style.filter = 'brightness(100%)';
+        dotFour.style.filter = 'brightness(30%)';
+      }
+    });
+
+    arrowLeft.addEventListener('click', () => {
+      if (blockFour.style.display === 'flex') {
+        blockFour.style.display = 'none';
+        blockThree.style.display = 'flex';
+        dotFour.style.filter = 'brightness(100%)';
+        dotThree.style.filter = 'brightness(30%)';
+      } else if (blockThree.style.display === 'flex') {
+        blockThree.style.display = 'none';
+        blockTwo.style.display = 'flex';
+        dotThree.style.filter = 'brightness(100%)';
+        dotTwo.style.filter = 'brightness(30%)';
+      } else if (blockTwo.style.display === 'flex') {
+        blockTwo.style.display = 'none';
+        blockOne.style.display = 'flex';
+        dotTwo.style.filter = 'brightness(100%)';
+        dotOne.style.filter = 'brightness(30%)';
+      }
+    });
+  }
+
+  function populateHourlyWeather(hourlyWeather) {
+    const hourDivs = document.querySelectorAll('.hour');
+    let i = 0;
+
+    hourDivs.forEach((hourDiv) => {
+      while (hourDiv.firstChild) {
+        hourDiv.removeChild(hourDiv.firstChild);
+      }
+    });
+
+    hourlyWeather.forEach((hour) => {
+      const time = document.createElement('div');
+      time.classList.add('hourly-time');
+      time.textContent = hour.time;
+
+      const tempC = document.createElement('div');
+      tempC.classList.add('hourly-temp');
+      tempC.textContent = `${hour.temp_c}°C`;
+
+      const icon = document.createElement('img');
+      tempC.classList.add('hourly-icon');
+      icon.alt = 'Weather Icon';
+      icon.src = hour.icon;
+
+      const iconContainer = document.createElement('div');
+      iconContainer.classList.add('icon-container');
+      iconContainer.appendChild(icon);
+
+      hourDivs[i].appendChild(time);
+      hourDivs[i].appendChild(tempC);
+      hourDivs[i].appendChild(iconContainer);
+      i += 1;
+    });
+
+    initializeNavigationControls();
+  }
+
   async function populateDom() {
     const processedData = await callApi();
     const { locationDetails } = processedData;
@@ -83,6 +185,7 @@ const apiToDom = () => {
     populateLocationDetails(locationDetails);
     populateBasicWeather(currentWeather);
     populateDetailedWeather(currentWeather);
+    populateHourlyWeather(hourlyWeather);
   }
 
   return { populateDom };
