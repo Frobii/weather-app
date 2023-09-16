@@ -66,71 +66,9 @@ const apiToDom = () => {
     moonPhase.textContent = currentWeather.moonPhase;
   }
 
-  function initializeNavigationControls() {
-    const arrowLeft = document.querySelector('.arrow-left');
-    const arrowRight = document.querySelector('.arrow-right');
-    const arrows = [arrowLeft, arrowRight];
-
-    arrows.forEach((control) => {
-      control.style.display = 'flex';
-    });
-
-    const dots = document.querySelectorAll('.dot');
-    const dotOne = dots[0];
-    const dotTwo = dots[1];
-    const dotThree = dots[2];
-    const dotFour = dots[3];
-
-    dots.forEach((control) => {
-      control.style.display = 'flex';
-    });
-
-    dotOne.style.filter = 'brightness(30%)';
-
-    const blockOne = document.querySelector('.block-one');
-    const blockTwo = document.querySelector('.block-two');
-    const blockThree = document.querySelector('.block-three');
-    const blockFour = document.querySelector('.block-four');
-
-    blockOne.style.display = 'flex';
-
-    arrowRight.addEventListener('click', () => {
-      if (blockOne.style.display === 'flex') {
-        blockOne.style.display = 'none';
-        blockTwo.style.display = 'flex';
-        dotOne.style.filter = 'brightness(100%)';
-        dotTwo.style.filter = 'brightness(30%)';
-      } else if (blockTwo.style.display === 'flex') {
-        blockTwo.style.display = 'none';
-        blockThree.style.display = 'flex';
-        dotTwo.style.filter = 'brightness(100%)';
-        dotThree.style.filter = 'brightness(30%)';
-      } else if (blockThree.style.display === 'flex') {
-        blockThree.style.display = 'none';
-        blockFour.style.display = 'flex';
-        dotThree.style.filter = 'brightness(100%)';
-        dotFour.style.filter = 'brightness(30%)';
-      }
-    });
-
-    arrowLeft.addEventListener('click', () => {
-      if (blockFour.style.display === 'flex') {
-        blockFour.style.display = 'none';
-        blockThree.style.display = 'flex';
-        dotFour.style.filter = 'brightness(100%)';
-        dotThree.style.filter = 'brightness(30%)';
-      } else if (blockThree.style.display === 'flex') {
-        blockThree.style.display = 'none';
-        blockTwo.style.display = 'flex';
-        dotThree.style.filter = 'brightness(100%)';
-        dotTwo.style.filter = 'brightness(30%)';
-      } else if (blockTwo.style.display === 'flex') {
-        blockTwo.style.display = 'none';
-        blockOne.style.display = 'flex';
-        dotTwo.style.filter = 'brightness(100%)';
-        dotOne.style.filter = 'brightness(30%)';
-      }
-    });
+  function showNavControls() {
+    const navControls = document.querySelector('.navigation-controls');
+    navControls.style.display = 'flex';
   }
 
   function populateHourlyWeather(hourlyWeather) {
@@ -167,7 +105,7 @@ const apiToDom = () => {
       i += 1;
     });
 
-    initializeNavigationControls();
+    showNavControls();
   }
 
   async function populateDom() {
@@ -191,6 +129,73 @@ const apiToDom = () => {
   return { populateDom };
 };
 
+function initializeNavigationControls() {
+  const arrowLeft = document.querySelector('.arrow-left');
+  const arrowRight = document.querySelector('.arrow-right');
+  const arrows = [arrowLeft, arrowRight];
+
+  arrows.forEach((control) => {
+    control.style.display = 'flex';
+  });
+
+  const dots = document.querySelectorAll('.dot');
+  const dotOne = dots[0];
+  const dotTwo = dots[1];
+  const dotThree = dots[2];
+  const dotFour = dots[3];
+
+  dots.forEach((control) => {
+    control.style.display = 'flex';
+  });
+
+  dotOne.style.filter = 'brightness(30%)';
+
+  const blockOne = document.querySelector('.block-one');
+  const blockTwo = document.querySelector('.block-two');
+  const blockThree = document.querySelector('.block-three');
+  const blockFour = document.querySelector('.block-four');
+
+  blockOne.style.display = 'flex';
+
+  arrowRight.addEventListener('click', () => {
+    if (blockOne.style.display === 'flex') {
+      blockOne.style.display = 'none';
+      blockTwo.style.display = 'flex';
+      dotOne.style.filter = 'brightness(100%)';
+      dotTwo.style.filter = 'brightness(30%)';
+    } else if (blockTwo.style.display === 'flex') {
+      blockTwo.style.display = 'none';
+      blockThree.style.display = 'flex';
+      dotTwo.style.filter = 'brightness(100%)';
+      dotThree.style.filter = 'brightness(30%)';
+    } else if (blockThree.style.display === 'flex') {
+      blockThree.style.display = 'none';
+      blockFour.style.display = 'flex';
+      dotThree.style.filter = 'brightness(100%)';
+      dotFour.style.filter = 'brightness(30%)';
+    }
+  });
+
+  arrowLeft.addEventListener('click', () => {
+    if (blockFour.style.display === 'flex') {
+      blockFour.style.display = 'none';
+      blockThree.style.display = 'flex';
+      dotFour.style.filter = 'brightness(100%)';
+      dotThree.style.filter = 'brightness(30%)';
+    } else if (blockThree.style.display === 'flex') {
+      blockThree.style.display = 'none';
+      blockTwo.style.display = 'flex';
+      dotThree.style.filter = 'brightness(100%)';
+      dotTwo.style.filter = 'brightness(30%)';
+    } else if (blockTwo.style.display === 'flex') {
+      blockTwo.style.display = 'none';
+      blockOne.style.display = 'flex';
+      dotTwo.style.filter = 'brightness(100%)';
+      dotOne.style.filter = 'brightness(30%)';
+    }
+  });
+}
+
 function setSearchEvents() {
   const searchBar = document.querySelector('.search-location');
   const searchIcon = document.querySelector('.search-icon');
@@ -203,6 +208,7 @@ function setSearchEvents() {
   searchIcon.addEventListener('click', () => {
     apiToDom().populateDom();
   });
+  initializeNavigationControls();
 }
 
 export default setSearchEvents;
