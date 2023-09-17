@@ -132,6 +132,11 @@ a:hover{
 
 .basic-weather {
     width: 35%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 3rem;
+    margin-right: 1.5rem;
 }
 .basic-icon-temp {
     display: flex;
@@ -150,7 +155,8 @@ a:hover{
     text-align: right;
 }
 .weather-description, .weather-feels-like {
-    margin-left: 20px;
+    text-align: center;
+    margin-left: 1rem;
     margin-top: 5px;
     font-size: 1.3rem;
 }
@@ -254,8 +260,35 @@ a:hover{
 }
 
 .daily-forecast {
-    background-color: white;
-    width: 50vw;
+    display: none;
+    flex-direction: column;
+    color: white;
+    width: 35rem;
     height: 400px;
     margin-top: 50px;
+}
+.forecast-title {
+    font-size: 1.75rem;
+    text-align: center;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+.day {
+    display: flex;
+    align-content: center;
+    font-size: 1.2rem;
+    vertical-align: bottom;
+    align-items: center;
+    margin-top: 0.5rem;
+}
+.day-name {
+    width: 25%;
+    margin-left: 10%;
+}
+.day-max {
+    width: 20%;
+    margin-left: 10%;
+}
+.day-min {
+    color: rgba(255, 255, 255, 0.596);
 }

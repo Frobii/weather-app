@@ -108,6 +108,49 @@ const apiToDom = () => {
     showNavControls();
   }
 
+  function populateWeeklyWeather(forecastWeather) {
+    const forecastContainer = document.querySelector('.daily-forecast');
+    forecastContainer.style.display = 'flex';
+    const dayOne = document.querySelector('.day-one');
+    const dayTwo = document.querySelector('.day-two');
+    const dayThree = document.querySelector('.day-three');
+    const days = [dayOne, dayTwo, dayThree];
+    let i = 0;
+
+    days.forEach((day) => {
+      while (day.firstChild) {
+        day.removeChild(day.firstChild);
+      }
+    });
+
+    forecastWeather.forEach((day) => {
+      const dayName = document.createElement('div');
+      dayName.classList.add('day-name');
+      const dayMax = document.createElement('div');
+      dayMax.classList.add('day-max');
+      const dayMin = document.createElement('div');
+      dayMin.classList.add('day-min');
+      const dayIcon = document.createElement('img');
+      dayIcon.classList.add('day-icon');
+      const iconContainer = document.createElement('div');
+      iconContainer.classList.add('icon-container');
+      iconContainer.appendChild(dayIcon);
+
+      dayName.textContent = day.dayName;
+      dayIcon.src = day.icon;
+      dayIcon.alt = 'Weather Icon';
+      dayMax.textContent = `${day.maxTempC}°C`;
+      dayMin.textContent = `${day.minTempC}°C`;
+
+      days[i].appendChild(dayName);
+      days[i].appendChild(dayIcon);
+      days[i].appendChild(dayMax);
+      days[i].appendChild(dayMin);
+
+      i += 1;
+    });
+  }
+
   async function populateDom() {
     const processedData = await callApi();
     const { locationDetails } = processedData;
@@ -117,13 +160,14 @@ const apiToDom = () => {
 
     // console.log('details', locationDetails);
     // console.log('current', currentWeather);
-    // console.log(hourlyWeather);
+    // console.log('hourly', hourlyWeather);
     // console.log('forecast', forecastWeather);
 
     populateLocationDetails(locationDetails);
     populateBasicWeather(currentWeather);
     populateDetailedWeather(currentWeather);
     populateHourlyWeather(hourlyWeather);
+    populateWeeklyWeather(forecastWeather);
   }
 
   return { populateDom };
