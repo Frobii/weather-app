@@ -14,7 +14,7 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    background-color: rgb(0, 112, 146);
+    background-image: linear-gradient(to bottom, #04689d, #1675aa, #2382b8, #2f90c5, #3a9ed3);
 }
 
 .header {
@@ -127,7 +127,7 @@ a:hover{
 .weather-info {
     display: flex;
     height: 300px;
-    margin-top: 20px;
+    margin-top: 30px;
 }
 
 .basic-weather {
@@ -166,6 +166,10 @@ a:hover{
 
 .data-item {
     display: none;
+    align-items: center;
+}
+.moon-phase {
+    text-align: center;
 }
 .data-label {
     color:rgba(255, 255, 255, 0.507);
