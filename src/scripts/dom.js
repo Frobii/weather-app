@@ -1,22 +1,6 @@
 import api from './api';
 
 const apiToDom = () => {
-  async function callApi() {
-    const searchBar = document.querySelector('.search-location');
-    const searchData = searchBar.value;
-    const locationDetails = await api.getLocationDetails(searchData);
-    const currentWeather = await api.getCurrentWeather(searchData);
-    const hourlyWeather = await api.getHourlyForecast(searchData);
-    const forecastWeather = await api.getThreeDayForecast(searchData);
-
-    return {
-      locationDetails,
-      currentWeather,
-      hourlyWeather,
-      forecastWeather,
-    };
-  }
-
   function populateLocationDetails(locationDetails) {
     const locationName = document.querySelector('.location-name');
     const dateTime = document.querySelector('.date-time');
@@ -151,108 +135,135 @@ const apiToDom = () => {
     });
   }
 
-  async function populateDom() {
-    const processedData = await callApi();
-    const { locationDetails } = processedData;
-    const { currentWeather } = processedData;
-    const { hourlyWeather } = processedData;
-    const { forecastWeather } = processedData;
+  async function populateDom(searchData) {
+    try {
+      const processedWeather = await api.getProcessedWeatherData(searchData);
 
-    // console.log('details', locationDetails);
-    // console.log('current', currentWeather);
-    // console.log('hourly', hourlyWeather);
-    // console.log('forecast', forecastWeather);
+      if (!processedWeather) {
+        return;
+      }
 
-    populateLocationDetails(locationDetails);
-    populateBasicWeather(currentWeather);
-    populateDetailedWeather(currentWeather);
-    populateHourlyWeather(hourlyWeather);
-    populateWeeklyWeather(forecastWeather);
+      const { locationDetails } = processedWeather;
+      const { currentWeather } = processedWeather;
+      const { hourlyWeather } = processedWeather;
+      const { threeDayForecast } = processedWeather;
+
+      // console.log('details', locationDetails);
+      // console.log('current', currentWeather);
+      // console.log('hourly', hourlyWeather);
+      // console.log('forecast', forecastWeather);
+
+      populateLocationDetails(locationDetails);
+      populateBasicWeather(currentWeather);
+      populateDetailedWeather(currentWeather);
+      populateHourlyWeather(hourlyWeather);
+      populateWeeklyWeather(threeDayForecast);
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   return { populateDom };
 };
 
-function initializeNavigationControls() {
-  const arrowLeft = document.querySelector('.arrow-left');
-  const arrowRight = document.querySelector('.arrow-right');
-  const arrows = [arrowLeft, arrowRight];
+const controls = () => {
+  function initializeNavigationControls() {
+    const arrowLeft = document.querySelector('.arrow-left');
+    const arrowRight = document.querySelector('.arrow-right');
+    const arrows = [arrowLeft, arrowRight];
 
-  arrows.forEach((control) => {
-    control.style.display = 'flex';
-  });
+    arrows.forEach((control) => {
+      control.style.display = 'flex';
+    });
 
-  const dots = document.querySelectorAll('.dot');
-  const dotOne = dots[0];
-  const dotTwo = dots[1];
-  const dotThree = dots[2];
-  const dotFour = dots[3];
+    const dots = document.querySelectorAll('.dot');
+    const dotOne = dots[0];
+    const dotTwo = dots[1];
+    const dotThree = dots[2];
+    const dotFour = dots[3];
 
-  dots.forEach((control) => {
-    control.style.display = 'flex';
-  });
+    dots.forEach((control) => {
+      control.style.display = 'flex';
+    });
 
-  dotOne.style.filter = 'brightness(30%)';
+    dotOne.style.filter = 'brightness(30%)';
 
-  const blockOne = document.querySelector('.block-one');
-  const blockTwo = document.querySelector('.block-two');
-  const blockThree = document.querySelector('.block-three');
-  const blockFour = document.querySelector('.block-four');
+    const blockOne = document.querySelector('.block-one');
+    const blockTwo = document.querySelector('.block-two');
+    const blockThree = document.querySelector('.block-three');
+    const blockFour = document.querySelector('.block-four');
 
-  blockOne.style.display = 'flex';
+    blockOne.style.display = 'flex';
 
-  arrowRight.addEventListener('click', () => {
-    if (blockOne.style.display === 'flex') {
-      blockOne.style.display = 'none';
-      blockTwo.style.display = 'flex';
-      dotOne.style.filter = 'brightness(100%)';
-      dotTwo.style.filter = 'brightness(30%)';
-    } else if (blockTwo.style.display === 'flex') {
-      blockTwo.style.display = 'none';
-      blockThree.style.display = 'flex';
-      dotTwo.style.filter = 'brightness(100%)';
-      dotThree.style.filter = 'brightness(30%)';
-    } else if (blockThree.style.display === 'flex') {
-      blockThree.style.display = 'none';
-      blockFour.style.display = 'flex';
-      dotThree.style.filter = 'brightness(100%)';
-      dotFour.style.filter = 'brightness(30%)';
-    }
-  });
+    arrowRight.addEventListener('click', () => {
+      if (blockOne.style.display === 'flex') {
+        blockOne.style.display = 'none';
+        blockTwo.style.display = 'flex';
+        dotOne.style.filter = 'brightness(100%)';
+        dotTwo.style.filter = 'brightness(30%)';
+      } else if (blockTwo.style.display === 'flex') {
+        blockTwo.style.display = 'none';
+        blockThree.style.display = 'flex';
+        dotTwo.style.filter = 'brightness(100%)';
+        dotThree.style.filter = 'brightness(30%)';
+      } else if (blockThree.style.display === 'flex') {
+        blockThree.style.display = 'none';
+        blockFour.style.display = 'flex';
+        dotThree.style.filter = 'brightness(100%)';
+        dotFour.style.filter = 'brightness(30%)';
+      }
+    });
 
-  arrowLeft.addEventListener('click', () => {
-    if (blockFour.style.display === 'flex') {
-      blockFour.style.display = 'none';
-      blockThree.style.display = 'flex';
-      dotFour.style.filter = 'brightness(100%)';
-      dotThree.style.filter = 'brightness(30%)';
-    } else if (blockThree.style.display === 'flex') {
-      blockThree.style.display = 'none';
-      blockTwo.style.display = 'flex';
-      dotThree.style.filter = 'brightness(100%)';
-      dotTwo.style.filter = 'brightness(30%)';
-    } else if (blockTwo.style.display === 'flex') {
-      blockTwo.style.display = 'none';
-      blockOne.style.display = 'flex';
-      dotTwo.style.filter = 'brightness(100%)';
-      dotOne.style.filter = 'brightness(30%)';
-    }
-  });
-}
+    arrowLeft.addEventListener('click', () => {
+      if (blockFour.style.display === 'flex') {
+        blockFour.style.display = 'none';
+        blockThree.style.display = 'flex';
+        dotFour.style.filter = 'brightness(100%)';
+        dotThree.style.filter = 'brightness(30%)';
+      } else if (blockThree.style.display === 'flex') {
+        blockThree.style.display = 'none';
+        blockTwo.style.display = 'flex';
+        dotThree.style.filter = 'brightness(100%)';
+        dotTwo.style.filter = 'brightness(30%)';
+      } else if (blockTwo.style.display === 'flex') {
+        blockTwo.style.display = 'none';
+        blockOne.style.display = 'flex';
+        dotTwo.style.filter = 'brightness(100%)';
+        dotOne.style.filter = 'brightness(30%)';
+      }
+    });
+  }
 
-function setSearchEvents() {
-  const searchBar = document.querySelector('.search-location');
-  const searchIcon = document.querySelector('.search-icon');
-  searchBar.addEventListener('keydown', (event) => {
-    if (event.keyCode === 13) {
-      event.preventDefault();
-      apiToDom().populateDom();
-    }
-  });
-  searchIcon.addEventListener('click', () => {
-    apiToDom().populateDom();
-  });
-  initializeNavigationControls();
-}
+  function setSearchEvents() {
+    const searchBar = document.querySelector('.search-location');
+    const searchIcon = document.querySelector('.search-icon');
 
-export default setSearchEvents;
+    searchBar.addEventListener('keydown', (event) => {
+      if (event.keyCode === 13) {
+        event.preventDefault();
+        const searchBar = document.querySelector('.search-location');
+        const searchData = searchBar.value;
+        apiToDom().populateDom(searchData);
+      }
+    });
+    searchIcon.addEventListener('click', () => {
+      const searchBar = document.querySelector('.search-location');
+      const searchData = searchBar.value;
+      apiToDom().populateDom(searchData);
+    });
+  }
+
+  function initializeControls() {
+    initializeNavigationControls();
+    setSearchEvents();
+  }
+
+  return {
+    initializeControls,
+  };
+};
+
+export {
+  controls,
+  apiToDom,
+};

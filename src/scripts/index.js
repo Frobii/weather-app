@@ -1,5 +1,7 @@
 import '../style.css';
 import '../template.html';
-import setSearchEvents from './dom';
+import { controls, apiToDom } from './dom';
 
-setSearchEvents();
+controls().initializeControls();
+
+apiToDom().populateDom('Benevento');
