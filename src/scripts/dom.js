@@ -15,7 +15,8 @@ const apiToDom = () => {
     const description = document.querySelector('.weather-description');
     const feelsLike = document.querySelector('.weather-feels-like');
 
-    icon.src = currentWeather.currentConditionIcon;
+    console.log(currentWeather.currentConditionIcon);
+    icon.src = `https:${currentWeather.currentConditionIcon}`;
     icon.style.display = 'flex';
     temperature.textContent = `${currentWeather.currentTempC}°C`;
     description.textContent = currentWeather.currentCondition;
@@ -77,7 +78,7 @@ const apiToDom = () => {
       const icon = document.createElement('img');
       tempC.classList.add('hourly-icon');
       icon.alt = 'Weather Icon';
-      icon.src = hour.icon;
+      icon.src = `https:${hour.icon}`;
 
       const iconContainer = document.createElement('div');
       iconContainer.classList.add('icon-container');
@@ -121,7 +122,7 @@ const apiToDom = () => {
       iconContainer.appendChild(dayIcon);
 
       dayName.textContent = day.dayName;
-      dayIcon.src = day.icon;
+      dayIcon.src = `https:${day.icon}`;
       dayIcon.alt = 'Weather Icon';
       dayMax.textContent = `${day.maxTempC}°C`;
       dayMin.textContent = `${day.minTempC}°C`;
